@@ -1,9 +1,13 @@
 from datetime import datetime
 import requests
+import smtplib
 
 # My Longitude & Latitude
 LAT = 31.945368
 LONG = 35.928371
+
+MY_EMAIL = "YOUR EMAIL"
+MY_PASSWORD = "YOUR PASSWORD"
 
 
 def is_iss_overhead():
@@ -38,6 +42,13 @@ def is_night():
 
 
 if is_night() and is_iss_overhead():
-    print("Hello")
+    with smtplib.SMTP("EMAIL PROVIDER SMTP SERVER") as connection:
+        connection.starttls()
+        connection.login(MY_EMAIL, MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs="EMAIL",
+            msg="Subject:ISS Overhead\n\nLook Up 🌃🌠"
+        )
 
 
